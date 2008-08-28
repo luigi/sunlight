@@ -20,7 +20,11 @@ The following gems are required:
 
 @$ sudo gem install json ym4r@
 
-Then, install the Sunlight gem:
+Then, install the stable Sunlight gem:
+
+@$ sudo gem install sunlight@
+
+Or, if you're adventurous, the latest dev version (which should be quite stable):
 
 @$ sudo gem install luigi-sunlight --source=http://gems.github.com@
 
@@ -29,6 +33,7 @@ Then, install the Sunlight gem:
 h2. Usage
 
 First, register for an API key "here":http://services.sunlightlabs.com/api/register/. 
+
 
 
 
