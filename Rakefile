@@ -21,9 +21,4 @@ Rake::RDocTask.new(:rdoc) do |rdoc|
   rdoc.rdoc_dir = 'doc' 
   rdoc.options << '--inline-source'
 end
-
-desc 'Install as a gem'
-task :install_gem do
-  puts `rake manifest package && gem install pkg/sunlight-#{Version}.gem`
-end
   
