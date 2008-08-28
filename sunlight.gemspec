@@ -10,5 +10,5 @@ Gem::Specification.new do |s|
     'lib/sunlight/legislator.rb', 'README.textile', 'CHANGES.textile']
   s.add_dependency("json", [">= 1.1.3"])
   s.add_dependency("ym4r", [">= 0.6.1"])
-  s.has_rdoc = false
+  s.has_rdoc = true
 end

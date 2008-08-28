@@ -8,7 +8,7 @@ bq. The Sunlight Labs API provides methods for obtaining basic information on Me
 
 Full API documentation available "here":http://services.sunlightlabs.com/api/docs/. 
 
-Optionally, the Sunlight gem integrates with the Google Maps API for "street address geocoding":http://code.google.com/apis/maps/documentation/services.html#Geocoding. Because some zip codes overlap two or more congressional districts, passing in a latitude/longitude will give users the most accurate information. Since it's highly unlikely a user would know their exact lat/lng, the Google Maps API is used to translate a street address string into a lat/lng pair.
+Also, the Sunlight gem integrates with the Google Maps API for "street address geocoding":http://code.google.com/apis/maps/documentation/services.html#Geocoding. Because some zip codes overlap two or more congressional districts, passing in a latitude/longitude will give users the most accurate information. Since it's highly unlikely a user would know their exact lat/lng, the Google Maps API is used to translate a street address string into a lat/lng pair.
 
 
 h2. Installation
