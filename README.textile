@@ -38,14 +38,14 @@ First, register for an API key "here":http://services.sunlightlabs.com/api/regis
 
 Then, you'll want to stick the following lines somewhere in your Ruby environment.
 
-<code>
+<pre><code>
   require 'rubygems'
   require 'sunlight'
   include Sunlight
   Sunlight.api_key = 'yourapikeyfromtheurlabove'
-</code>
+</code></pre>
 
-If you're testing this out in IRB, you'll run them one at a time. Using Rails? Stick them in a file called @sunlight.rb@ in RAILS_ROOT/config/initializers.
+If you're testing this out in IRB, you'll run them one at a time. If you're using Rails 2.1, stick them in a file called @sunlight.rb@ in @RAILS_ROOT/config/initializers@. They'll load on app startup.
 
 h2. Usage
 
@@ -63,17 +63,17 @@ Now, it's time to get to the good stuff. The most useful method is @Legislator#a
   junior_senator.phone              # returns "202-224-4451"  
 </code></pre>
 
-Note that you should make the best attempt to get a full street address. A five-digit zip-code alone won't cut it, as there may be multiple congressional districts in a single zip code (there are ways to deal with this below). Make sure to review all the available fields from the "Sunlight Labs API":http://services.sunlightlabs.com/api/docs/legislators/.
+Note that you should make the best attempt to get a full street address, as that is geocoded behind the scenes into a lat/long pair. A five-digit zip code alone won't cut it, as there may be multiple congressional districts in a single zip code (there are ways to deal with this below). If you pass in a zip+4, then you'll get much better geocoding results.
 
-So @Legislator#all_for@ returns a hash of @Legislator@ objects, and the keys are @:senior_senator@, @:junior_senator@, and @:representative@. You can also pass in a lat/long pair:
+So @Legislator#all_for@ returns a hash of @Legislator@ objects, and the keys are @:senior_senator@, @:junior_senator@, and @:representative@. Make sure to review all the available fields from the "Sunlight Labs API":http://services.sunlightlabs.com/api/docs/legislators/. You can also pass in a lat/long pair:
 
 <pre><code>
   congresspeople = Legislator.all_for(:latitude => 33.876145, :longitude => -84.453789)
 </code></pre>
 
-This bypasses the geocoding necessary by the Google Maps API. For social networks and other applications with a User object, it makes sense to geocode the address up front and save the lat/long data in the local database. Then, use the lat/long pair instead of address, which cuts a substantial bit time from the @Legislator#all_for@ request since the Google Maps API Geocoding function doesn't have to be called.
+This bypasses the geocoding necessary by the Google Maps API. For social networks and other applications with a User object, it makes sense to geocode the user's address up front and save the lat/long data in the local database. Then, use the lat/long pair instead of address, which cuts a substantial bit of time from the @Legislator#all_for@ request since the Google Maps API Geocoding function doesn't have to be called.
 
-You can also use the @Legislator#all_where@ method for searching based on available fields. You'll get back an array of Legislator objects:
+You can also use the @Legislator#all_where@ method for searching based on available fields. You'll get back an array of @Legislator@ objects:
 
 <pre><code>
   johns = Legislator.all_where(:firstname => "John")
@@ -85,7 +85,7 @@ You can also use the @Legislator#all_where@ method for searching based on availa
   end
 </code></pre>
 
-There's also the @District@ object. @District#get@ takes in either lat/long or an address and does it's best to return correct Congressional District:
+There's also the @District@ object. @District#get@ takes in either lat/long or an address and does it's best to return the correct Congressional District:
 
 <pre><code>
   district = District.get(:latitude => 33.876145, :longitude => -84.453789)
