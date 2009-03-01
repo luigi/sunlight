@@ -6,8 +6,9 @@ module Sunlight
     attr_accessor :title, :firstname, :middlename, :lastname, :name_suffix, :nickname,
                   :party, :state, :district, :gender, :phone, :fax, :website, :webform,
                   :email, :congress_office, :bioguide_id, :votesmart_id, :fec_id,
-                  :govtrack_id, :crp_id, :event_id, :congresspedia_url
-    
+                  :govtrack_id, :crp_id, :event_id, :congresspedia_url, :youtube_url,
+                  :twitter_id
+                      
     # Takes in a hash where the keys are strings (the format passed in by the JSON parser)
     #
     def initialize(params)
