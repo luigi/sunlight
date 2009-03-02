@@ -123,13 +123,19 @@ describe Sunlight::Legislator do
       legislators.should be(nil)
     end
     
-    
     it "should return nil when no probable match at all" do
       Sunlight::Legislator.should_receive(:get_json_data).and_return({"response"=>{"results"=>[]}})
     
       legislators = Sunlight::Legislator.search_by_name("923jkfkj elkji")
       legislators.should be(nil)      
     end
+    
+    it "should return nil on bad data" do
+      Sunlight::Legislator.should_receive(:get_json_data).and_return(nil)
+    
+      legislators = Sunlight::Legislator.search_by_name("923jkfkj elkji","lkjd")
+      legislators.should be(nil)      
+    end    
     
     
   end
