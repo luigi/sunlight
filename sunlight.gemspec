@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name = "sunlight"
-  s.version = "0.1.0"
-  s.date = "2008-08-28"
+  s.version = "0.2.0"
+  s.date = "2009-03-01"
   s.summary = "Library for accessing the Sunlight Labs API."
   s.email = "luigi.montanez@gmail.com"
   s.homepage = "http://github.com/luigi/sunlight"
