@@ -1,3 +1,11 @@
+h3. 0.2.0 / 2009-03-01
+
+* Add support for twitter_id and youtube_url on Legislator
+* Add Legislator#search_by_name for fuzzy name searching
+* Add Legislator#all_in_zipcode for better lookups on a five-digit zip code
+* Raise exception when API Key isn't set
+* Credit for various fixes goes to GitHub users pengwynn, hoverbird, and wilson
+
 h3. 0.1.0 / 2008-08-20
 
 * Initial version
