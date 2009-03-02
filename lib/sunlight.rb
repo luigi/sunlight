@@ -17,9 +17,12 @@ module Sunlight
 
     # Constructs a Sunlight API-friendly URL
     def self.construct_url(api_method, params)
-      "#{API_URL}#{api_method}.#{API_FORMAT}?apikey=#{Sunlight.api_key}#{hash2get(params)}"
+      if Sunlight.api_key == nil or Sunlight.api_key == ''
+        raise "Failed to provide Sunlight API Key"
+      else
+        "#{API_URL}#{api_method}.#{API_FORMAT}?apikey=#{Sunlight.api_key}#{hash2get(params)}"
+      end
     end
-
 
 
     # Converts a hash to a GET string
@@ -34,7 +37,7 @@ module Sunlight
       get_string
 
     end # def hash2get
-
+    
 
     # Use the Net::HTTP and JSON libraries to make the API call
     #
@@ -50,7 +53,6 @@ module Sunlight
       end
 
     end # self.get_json_data
-
 
 
   end # class SunlightObject

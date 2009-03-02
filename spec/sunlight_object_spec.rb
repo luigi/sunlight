@@ -7,6 +7,8 @@ describe Sunlight::SunlightObject do
     @sunlight = Sunlight::SunlightObject.new
   end
 
+
+
   describe "#hash2get" do
 
     it "should convert a hash to a GET string" do
@@ -24,6 +26,22 @@ describe Sunlight::SunlightObject do
       url = Sunlight::SunlightObject.construct_url("test.method", {})
       url.should eql('http://services.sunlightlabs.com/api/test.method.json?apikey=the_api_key&firstname=Nancy&lastname=Pelosi')
     end
+    
+    it "should raise an exception when key is nil" do
+      Sunlight::SunlightObject.stub!(:hash2get).and_return(nil)
+      Sunlight.api_key = nil
+      
+      lambda {Sunlight::SunlightObject.construct_url("test.method", {})}.should raise_error
+    end
+    
+    it "should raise an exception when key is blank" do
+      Sunlight::SunlightObject.stub!(:hash2get).and_return(nil)
+      Sunlight.api_key = ''
+      
+      lambda {Sunlight::SunlightObject.construct_url("test.method", {})}.should raise_error
+    end
+    
+    
 
   end
 
