@@ -7,7 +7,7 @@ module Sunlight
                   :party, :state, :district, :gender, :phone, :fax, :website, :webform,
                   :email, :congress_office, :bioguide_id, :votesmart_id, :fec_id,
                   :govtrack_id, :crp_id, :event_id, :congresspedia_url, :youtube_url,
-                  :twitter_id
+                  :twitter_id, :fuzzy_score
 
     # Takes in a hash where the keys are strings (the format passed in by the JSON parser)
     #
@@ -36,7 +36,7 @@ module Sunlight
     #   rep = officials[:representative]
     #
     #   Legislator.all_for(:address => "123 Fifth Ave New York, NY 10003")
-    #   Legislator.all_for(:address => "90210") # not recommended, but it'll work
+    #   Legislator.all_for(:address => "90210") # it'll work, but use all_in_zip instead
     #
     def self.all_for(params)
 
@@ -104,9 +104,92 @@ module Sunlight
       end # if response.class
 
     end
+    
+    #
+    # When you only have a zipcode (and could not get address from the user), use this.
+    # It specifically accounts for the case where more than one Representative's district
+    # is in a zip code.
+    # 
+    # If possible, ask for full address for proper geocoding via Legislator#all_for, which
+    # gives you a nice hash.
+    #
+    # Returns:
+    #
+    # An array of Legislator objects
+    #
+    # Usage:
+    #
+    #   legislators = Legislator.all_in_zipcode(90210)
+    #
+    def self.all_in_zipcode(zipcode)
 
+      url = construct_url("legislators.allForZip", {:zip => zipcode})
+      
+      if (result = get_json_data(url))
 
+        legislators = []
+        result["response"]["legislators"].each do |legislator|
+          legislators << Legislator.new(legislator["legislator"])
+        end
 
+        legislators
+
+      else  
+        nil
+      end # if response.class
+
+    end # def self.all_in_zipcode
+    
+    
+    # 
+    # Fuzzy name searching. Returns possible matching Legislators 
+    # along with a confidence score. Confidence scores below 0.8
+    # mean the Legislator should not be used.
+    #
+    # The API documentation explains it best:
+    # 
+    # http://wiki.sunlightlabs.com/index.php/Legislators.search
+    #
+    # Returns:
+    #
+    # An array of Legislators, with the fuzzy_score set as an attribute
+    #
+    # Usage:
+    #
+    #   legislators = Legislator.search_by_name("Teddy Kennedey")
+    #   legislators = Legislator.search_by_name("Johnny Kerry", 0.9)
+    #
+    def self.search_by_name(name, threshold='0.8')
+      
+      url = construct_url("legislators.search", {:name => name, :threshold => threshold})
+      
+      if (response = get_json_data(url))
+        
+        legislators = []
+        response["response"]["results"].each do |result|
+          if result
+            legislator = Legislator.new(result["result"]["legislator"])
+            fuzzy_score = result["result"]["score"]
+            
+            if threshold.to_f < fuzzy_score.to_f
+              legislator.fuzzy_score = fuzzy_score.to_f
+              legislators << legislator
+            end
+          end
+        end
+        
+        if legislators.empty?
+          nil
+        else
+          legislators 
+        end
+        
+      else
+        nil
+      end
+      
+    end # def self.search_by_name
+    
   end # class Legislator
 
 end # module Sunlight

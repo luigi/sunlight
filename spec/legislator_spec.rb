@@ -78,5 +78,60 @@ describe Sunlight::Legislator do
     end
 
   end
+  
+  describe "#all_in_zipcode" do
+    
+    it "should return array when valid parameters passed in" do
+      Sunlight::Legislator.should_receive(:get_json_data).and_return({"response"=>{"legislators"=>[{"legislator"=>{"state"=>"GA"}}]}})
+      
+      legislators = Sunlight::Legislator.all_in_zipcode(:zip => "30339")
+      legislators.first.state.should eql('GA')
+    end
+    
+    it "should return nil when unknown parameters passed in" do
+      Sunlight::Legislator.should_receive(:get_json_data).and_return(nil)
+
+      legislators = Sunlight::Legislator.all_in_zipcode(:blah => "Blech")
+      legislators.should be(nil)
+    end
+    
+  end
+
+
+  describe "#search_by_name" do
+    
+    it "should return array when probable match passed in with no threshold" do
+      Sunlight::Legislator.should_receive(:get_json_data).and_return({"response"=>{"results"=>[{"result"=>{"score"=>"0.91", "legislator"=>{"firstname"=>"Edward"}}}]}})
+      
+      legislators = Sunlight::Legislator.search_by_name("Teddy Kennedey")
+      legislators.first.fuzzy_score.should eql(0.91)
+      legislators.first.firstname.should eql('Edward')
+    end
+    
+    it "should return an array when probable match passed in is over supplied threshold" do
+      Sunlight::Legislator.should_receive(:get_json_data).and_return({"response"=>{"results"=>[{"result"=>{"score"=>"0.91", "legislator"=>{"firstname"=>"Edward"}}}]}})
+    
+      legislators = Sunlight::Legislator.search_by_name("Teddy Kennedey", 0.9)
+      legislators.first.fuzzy_score.should eql(0.91)
+      legislators.first.firstname.should eql('Edward')
+    end
+    
+    it "should return nil when probable match passed in but underneath supplied threshold" do
+      Sunlight::Legislator.should_receive(:get_json_data).and_return({"response"=>{"results"=>[{"result"=>{"score"=>"0.91", "legislator"=>{"firstname"=>"Edward"}}}]}})
+    
+      legislators = Sunlight::Legislator.search_by_name("Teddy Kennedey", 0.92)
+      legislators.should be(nil)
+    end
+    
+    
+    it "should return nil when no probable match at all" do
+      Sunlight::Legislator.should_receive(:get_json_data).and_return({"response"=>{"results"=>[]}})
+    
+      legislators = Sunlight::Legislator.search_by_name("923jkfkj elkji")
+      legislators.should be(nil)      
+    end
+    
+    
+  end
 
 end
