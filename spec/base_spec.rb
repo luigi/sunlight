@@ -1,18 +1,16 @@
 require File.dirname(__FILE__) + '/spec_helper'
 
-describe Sunlight::SunlightObject do
+describe Sunlight::Base do
 
   before(:each) do
-    Sunlight.api_key = 'the_api_key'
-    @sunlight = Sunlight::SunlightObject.new
+    Sunlight::Base.api_key = 'the_api_key'
+    @sunlight = Sunlight::Base.new
   end
-
-
 
   describe "#hash2get" do
 
     it "should convert a hash to a GET string" do
-      get_string = Sunlight::SunlightObject.hash2get(:firstname => "Barack", :lastname => "Obama")
+      get_string = Sunlight::Base.hash2get(:firstname => "Barack", :lastname => "Obama")
       get_string.should satisfy { |s| s == '&firstname=Barack&lastname=Obama' or s == '&lastname=Obama&firstname=Barack' }
     end
 
@@ -21,24 +19,24 @@ describe Sunlight::SunlightObject do
   describe "#construct_url" do
 
     it "should construct a properly formatting API URL" do
-      Sunlight::SunlightObject.stub!(:hash2get).and_return("&firstname=Nancy&lastname=Pelosi")
+      Sunlight::Base.stub!(:hash2get).and_return("&firstname=Nancy&lastname=Pelosi")
 
-      url = Sunlight::SunlightObject.construct_url("test.method", {})
+      url = Sunlight::Base.construct_url("test.method", {})
       url.should eql('http://services.sunlightlabs.com/api/test.method.json?apikey=the_api_key&firstname=Nancy&lastname=Pelosi')
     end
     
     it "should raise an exception when key is nil" do
-      Sunlight::SunlightObject.stub!(:hash2get).and_return(nil)
-      Sunlight.api_key = nil
+      Sunlight::Base.stub!(:hash2get).and_return(nil)
+      Sunlight::Base.api_key = nil
       
-      lambda {Sunlight::SunlightObject.construct_url("test.method", {})}.should raise_error
+      lambda {Sunlight::Base.construct_url("test.method", {})}.should raise_error
     end
     
     it "should raise an exception when key is blank" do
-      Sunlight::SunlightObject.stub!(:hash2get).and_return(nil)
-      Sunlight.api_key = ''
+      Sunlight::Base.stub!(:hash2get).and_return(nil)
+      Sunlight::Base.api_key = ''
       
-      lambda {Sunlight::SunlightObject.construct_url("test.method", {})}.should raise_error
+      lambda {Sunlight::Base.construct_url("test.method", {})}.should raise_error
     end
     
     
@@ -53,7 +51,7 @@ describe Sunlight::SunlightObject do
       mock_response.should_receive(:body).and_return("{\"response\": {\"districts\": [{\"district\": {\"state\": \"GA\", \"number\": \"6\"}}]}}")
       Net::HTTP.should_receive(:get_response).and_return(mock_response)
 
-      data = Sunlight::SunlightObject.get_json_data("http://someurl.com")
+      data = Sunlight::Base.get_json_data("http://someurl.com")
       data.should == {"response"=>{"districts"=>[{"district"=>{"number"=>"6","state"=>"GA"}}]}}
     end
 
@@ -61,7 +59,7 @@ describe Sunlight::SunlightObject do
       mock_response = mock Net::HTTPNotFound
       Net::HTTP.should_receive(:get_response).and_return(mock_response)
 
-      data = Sunlight::SunlightObject.get_json_data("http://someurl.com")
+      data = Sunlight::Base.get_json_data("http://someurl.com")
       data.should be(nil)
     end
 

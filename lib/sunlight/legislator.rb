@@ -1,6 +1,6 @@
 module Sunlight
 
-  class Legislator < SunlightObject
+  class Legislator < Base
 
 
     attr_accessor :title, :firstname, :middlename, :lastname, :name_suffix, :nickname,
@@ -16,7 +16,6 @@ module Sunlight
         instance_variable_set("@#{key}", value) if Legislator.instance_methods.include? key
       end
     end
-
 
 
     #
@@ -35,8 +34,8 @@ module Sunlight
     #   junior = officials[:junior_senator]
     #   rep = officials[:representative]
     #
-    #   Legislator.all_for(:address => "123 Fifth Ave New York, NY 10003")
-    #   Legislator.all_for(:address => "90210") # it'll work, but use all_in_zip instead
+    #   Sunlight::Legislator.all_for(:address => "123 Fifth Ave New York, NY 10003")
+    #   Sunlight::Legislator.all_for(:address => "90210") # it'll work, but use all_in_zip instead
     #
     def self.all_for(params)
 
@@ -57,7 +56,7 @@ module Sunlight
     #
     # Usage:
     #
-    #   officials = Legislator.all_in_district(District.new("NJ", "7"))
+    #   officials = Sunlight::Legislator.all_in_district(District.new("NJ", "7"))
     #
     def self.all_in_district(district)
 
@@ -82,9 +81,9 @@ module Sunlight
     #
     # Usage:
     #
-    #   johns = Legislator.all_where(:firstname => "John")
-    #   floridians = Legislator.all_where(:state => "FL")
-    #   dudes = Legislator.all_where(:gender => "M")
+    #   johns = Sunlight::Legislator.all_where(:firstname => "John")
+    #   floridians = Sunlight::Legislator.all_where(:state => "FL")
+    #   dudes = Sunlight::Legislator.all_where(:gender => "M")
     #
     def self.all_where(params)
 
@@ -119,7 +118,7 @@ module Sunlight
     #
     # Usage:
     #
-    #   legislators = Legislator.all_in_zipcode(90210)
+    #   legislators = Sunlight::Legislator.all_in_zipcode(90210)
     #
     def self.all_in_zipcode(zipcode)
 
@@ -156,8 +155,8 @@ module Sunlight
     #
     # Usage:
     #
-    #   legislators = Legislator.search_by_name("Teddy Kennedey")
-    #   legislators = Legislator.search_by_name("Johnny Kerry", 0.9)
+    #   legislators = Sunlight::Legislator.search_by_name("Teddy Kennedey")
+    #   legislators = Sunlight::Legislator.search_by_name("Johnny Kerry", 0.9)
     #
     def self.search_by_name(name, threshold='0.8')
       

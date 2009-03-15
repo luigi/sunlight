@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + '/spec_helper'
 describe Sunlight::District do
 
   before(:each) do
-    Sunlight.api_key = 'the_api_key'
+    Sunlight::Base.api_key = 'the_api_key'
     Sunlight::District.stub!(:construct_url).and_return("http://someurl.com")
   end
 

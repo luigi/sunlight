@@ -36,16 +36,15 @@ h2. Set Up
 
 First, register for an API key "here":http://services.sunlightlabs.com/api/register/. 
 
-Then, you'll want to stick the following lines somewhere in your Ruby environment.
+Then, you'll want to stick the following lines somewhere in your Ruby environment. _Note, this set up changed slightly as of version 0.9.0:_
 
 <pre><code>
   require 'rubygems'
   require 'sunlight'
-  include Sunlight
-  Sunlight.api_key = 'yourapikeyfromtheurlabove'
+  Sunlight::Base.api_key = 'yourapikeyfromtheurlabove'
 </code></pre>
 
-If you're testing this out in IRB, you'll run them one at a time. If you're using Rails 2.1, stick them in a file called @sunlight.rb@ in @RAILS_ROOT/config/initializers@. They'll load on app startup.
+If you're testing this out in IRB, you'll run them one at a time. If you're using Rails >=2.1, stick them in a file called @sunlight.rb@ in @RAILS_ROOT/config/initializers@. They'll load on app startup.
 
 h2. Usage
 

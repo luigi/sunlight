@@ -1,3 +1,14 @@
+h3. 0.9.0 / 2009-03-15
+
+* Warning: This release is not backwards-compatible!
+* Change loading behavior of base functionality, works better with Rails and Merb
+* Sunlight::SunlightObject is now Sunlight::Base
+* For set up, Sunlight.api_key= is now Sunlight::Base.api_key=
+* For set up, using "include 'Sunlight'" is no longer recommended
+* Correct usage is Sunlight::Legislator.all_for(...) instead of just Legislator.all_for(...)
+* Credit to Rue the Ghetto (rughetto on GitHub) and Eric Mill for inspiring the improvements above
+
+
 h3. 0.2.0 / 2009-03-01
 
 * Add support for twitter_id and youtube_url on Legislator

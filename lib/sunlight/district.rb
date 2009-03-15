@@ -1,6 +1,6 @@
 module Sunlight
 
-  class District < SunlightObject
+  class District < Base
 
     attr_accessor :state, :number
 
@@ -11,8 +11,8 @@ module Sunlight
 
 
     # Usage:
-    #   District.get(:latitude => 33.876145, :longitude => -84.453789)    # returns one District object or nil
-    #   District.get(:address => "123 Fifth Ave New York, NY")     # returns one District object or nil
+    #   Sunlight::District.get(:latitude => 33.876145, :longitude => -84.453789)    # returns one District object or nil
+    #   Sunlight::District.get(:address => "123 Fifth Ave New York, NY")     # returns one District object or nil
     #
     def self.get(params)
 
@@ -39,7 +39,7 @@ module Sunlight
 
 
     # Usage:
-    #   District.get_from_lat_long(-123, 123)   # returns District object or nil
+    #   Sunlight::District.get_from_lat_long(-123, 123)   # returns District object or nil
     #
     def self.get_from_lat_long(latitude, longitude)
 
@@ -63,7 +63,7 @@ module Sunlight
 
 
     # Usage:
-    #   District.all_from_zipcode(90210)    # returns array of District objects
+    #   Sunlight::District.all_from_zipcode(90210)    # returns array of District objects
     #
     def self.all_from_zipcode(zipcode)
 
@@ -87,7 +87,7 @@ module Sunlight
 
 
     # Usage:
-    #   District.zipcodes_in("NY", 29)     # returns ["14009", "14024", "14029", ...]
+    #   Sunlight::District.zipcodes_in("NY", 29)     # returns ["14009", "14024", "14029", ...]
     #
     def self.zipcodes_in(state, number)
 
