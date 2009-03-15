@@ -7,7 +7,7 @@ h3. 0.9.0 / 2009-03-15
 * For set up, using "include 'Sunlight'" is no longer recommended
 * Correct usage is Sunlight::Legislator.all_for(...) instead of just Legislator.all_for(...)
 * Credit to Rue the Ghetto (rughetto on GitHub) and Eric Mill for inspiring the improvements above
-
+* Add support for senate_class ("I", "II", or "III") and in_office (0 or 1) on Legislator
 
 h3. 0.2.0 / 2009-03-01
 
