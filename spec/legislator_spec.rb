@@ -18,8 +18,8 @@ describe Sunlight::Legislator do
   describe "#initialize" do
 
     it "should create an object from a JSON parser-generated hash" do
-      carolyn = Legislator.new(@example_hash)
-      carolyn.should be_an_instance_of(Legislator)
+      carolyn = Sunlight::Legislator.new(@example_hash)
+      carolyn.should be_an_instance_of(Sunlight::Legislator)
       carolyn.firstname.should eql("Carolyn")
     end
 
