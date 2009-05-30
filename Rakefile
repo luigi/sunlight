@@ -22,3 +22,4 @@ Rake::RDocTask.new(:rdoc) do |rdoc|
   rdoc.options << '--inline-source'
 end
   
+task :default => [:spec]
