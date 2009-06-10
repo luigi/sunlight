@@ -41,6 +41,16 @@ describe Sunlight::Legislator do
       comms.should be_an_instance_of(Array)
       comms[0].should be_an_instance_of(Sunlight::Committee)
     end
+    
+    it "should return nil if no committees are found" do
+      
+      Sunlight::Base.should_receive(:get_json_data).and_return(nil)
+      
+      carolyn = Sunlight::Legislator.new(@example_hash)                                                                             
+      comms = carolyn.committees
+      comms.should be_nil
+    end
+    
   end
 
   describe "#all_for" do
