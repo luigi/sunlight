@@ -108,7 +108,6 @@ Lastly, to provide your users with a name search functionality, use @Legislator#
 
 h3. District
 
-
 There's also the @District@ object. @District#get@ takes in either lat/long or an address and does it's best to return the correct Congressional District:
 
 <pre><code>
@@ -124,6 +123,46 @@ Finally, two more methods, @District.all_from_zipcode@ and @District.zipcodes_in
 <pre><code>
 	districts = Sunlight::District.all_from_zipcode(90210)    # returns array of District objects
 	zipcodes = Sunlight::District.zipcodes_in("NY", "10")     # returns array of zip codes as strings  ["11201", "11202", "11203",...]
+</code></pre>
+
+
+h3. Committees
+
+Members of Congress sit on all-important @Committees@, the smaller bodies that hold hearings and are first to review legislation.
+
+The @Committee@ object has three identifying fields, and an array of subcommittees, which are @Committee@ objects themselves. To get all the committees for a given chamber of Congress:
+
+<pre><code>
+  committees = Sunlight::Committee.all_for_chamber("Senate") # or "House" or "Joint"
+  some_committee = committees.last
+  some_committee.name       # "Senate Committee on Agriculture, Nutrition, and Forestry"
+  some_committee.id         # "SSAF"
+  some_committee.chamber    # "Senate"
+  
+  some_committee.subcommittees.each do |subcommittee|
+    # do some stuff...
+  end
+</code></pre>
+
+The @Committee@ object also keeps a collection of members in that committee, but since that's an API-heavy call, it must be done for each Committee one at a time:
+
+<pre><code>
+  committees = Sunlight::Committee.all_for_chamber("Senate") # or "House" or "Joint"
+  some_committee = committees.last    # some_committee.members starts out as nil
+  some_committee.load_members         # some_committee.members is now populated
+  some_committee.members.each do |legislator|
+    # do some stuff...
+  end
+</code></pre>
+
+Coming from the opposite direction, the @Legislator@ object has a method for getting all committees for that particular Legislator, returning an array of @Committee@ objects:
+
+<pre><code>
+  legislators = Sunlight::Legislator.search_by_name("Ted Kennedy")
+  legislator = legislators.first
+  legislator.committees.each do |committee|
+    # do some stuff...
+  end
 </code></pre>
 
 h3. Lobbyists and Filings
