@@ -11,8 +11,8 @@ describe Sunlight::Committee do
 
     @example_legislators = {:senior_senator => @jan, :junior_senator => @bob}    
     @example_committee = {"chamber" => "Joint", "id" => "JSPR", "name" => "Joint Committee on Printing", 
-                                                                                "members" => [{"legislator" => {"state" => "GA"}}],
-                                                                                "subcommittees" => [{"committee" => {"chamber" => "Joint", "id" => "JSPR", "name" => "Subcommittee on Ink"}}]}
+                          "members" => [{"legislator" => {"state" => "GA"}}],
+                          "subcommittees" => [{"committee" => {"chamber" => "Joint", "id" => "JSPR", "name" => "Subcommittee on Ink"}}]}
 
   end
 
@@ -24,6 +24,24 @@ describe Sunlight::Committee do
       comm.name.should eql("Joint Committee on Printing")
     end
 
+  end
+  
+  describe "#load_members" do
+    
+    it "should populate members with an array" do      
+      @committee = {"chamber" => "Joint", "id" => "JSPR", "name" => "Joint Committee on Printing", 
+                            "subcommittees" => [{"committee" => {"chamber" => "Joint", "id" => "JSPR", "name" => "Subcommittee on Ink"}}]}
+      
+      mock_committee = mock(Sunlight::Committee)
+      mock_committee.should_receive(:members).and_return([])
+      Sunlight::Committee.should_receive(:get).and_return(mock_committee)
+
+      comm = Sunlight::Committee.new(@committee)
+      comm.members.should be_nil
+      comm.load_members
+      comm.members.should be_an_instance_of(Array)      
+    end
+    
   end
   
   describe "#get" do

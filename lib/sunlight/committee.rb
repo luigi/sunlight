@@ -27,6 +27,10 @@ module Sunlight
       end
     end
     
+    def load_members
+      self.members = Sunlight::Committee.get(self.id).members
+    end
+    
     # 
     # Usage:
     #   Sunlight::Committee.get("JSPR")     # returns a Committee
