@@ -16,6 +16,26 @@ module Sunlight
         instance_variable_set("@#{key}", value) if Legislator.instance_methods.include? key
       end
     end
+    
+    # Get the committees the Legislator sits on
+    #
+    # Returns:
+    #
+    # An array of Committee objects, each possibly
+    # having its own subarray of subcommittees
+    def committees
+      url = Sunlight::Base.construct_url("committees.allForLegislator", {:bioguide_id => self.bioguide_id})
+
+       if (result = Sunlight::Base.get_json_data(url))
+         committees = []
+         result["response"]["committees"].each do |committee|
+           committees << Sunlight::Committee.new(committee["committee"])
+         end
+       else
+         nil # appropriate params not found
+       end
+       committees
+    end
 
 
     #

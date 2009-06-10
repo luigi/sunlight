@@ -24,6 +24,24 @@ describe Sunlight::Legislator do
     end
 
   end
+  
+  describe "#committees" do
+    
+    
+    it "should return an array of Committees with subarrays for subcommittees" do
+      @example_committee = {"chamber" => "Joint", "id" => "JSPR", "name" => "Joint Committee on Printing", 
+                                                                                  "members" => [{"legislator" => {"state" => "GA"}}],
+                                                                                  "subcommittees" => [{"committee" => {"chamber" => "Joint", "id" => "JSPR", "name" => "Subcommittee on Ink"}}]}
+      
+      Sunlight::Base.should_receive(:get_json_data).and_return({"response" => {"committees" => 
+                                                                              [{"committee" => @example_committee}]}})
+      
+      carolyn = Sunlight::Legislator.new(@example_hash)                                                                             
+      comms = carolyn.committees
+      comms.should be_an_instance_of(Array)
+      comms[0].should be_an_instance_of(Sunlight::Committee)
+    end
+  end
 
   describe "#all_for" do
 
@@ -66,7 +84,7 @@ describe Sunlight::Legislator do
     it "should return array when valid parameters passed in" do
       Sunlight::Legislator.should_receive(:get_json_data).and_return({"response"=>{"legislators"=>[{"legislator"=>{"state"=>"GA"}}]}})
 
-      legislators = Sunlight::Legislator.all_where(:first_name => "Susie")
+      legislators = Sunlight::Legislator.all_where(:firstname => "Susie")
       legislators.first.state.should eql('GA')
     end
 
