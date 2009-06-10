@@ -3,6 +3,8 @@ Gem::Specification.new do |s|
   s.version = "1.0.0"
   s.date = "2009-06-10"
   s.summary = "Library for accessing the Sunlight Labs API."
+  s.description = "Library for accessing the Sunlight Labs API."
+  s.rubyforge_project = "sunlight"
   s.email = "luigi@sunlightfoundation.com"
   s.homepage = "http://github.com/luigi/sunlight"
   s.authors = ["Luigi Montanez"]
