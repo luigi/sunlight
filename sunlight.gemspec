@@ -1,9 +1,9 @@
 Gem::Specification.new do |s|
   s.name = "sunlight"
-  s.version = "0.9.0"
-  s.date = "2009-03-15"
+  s.version = "1.0.0"
+  s.date = "2009-06-10"
   s.summary = "Library for accessing the Sunlight Labs API."
-  s.email = "luigi.montanez@gmail.com"
+  s.email = "luigi@sunlightfoundation.com"
   s.homepage = "http://github.com/luigi/sunlight"
   s.authors = ["Luigi Montanez"]
   s.files = ['sunlight.gemspec', 'lib/sunlight.rb', 'lib/sunlight/base.rb',
