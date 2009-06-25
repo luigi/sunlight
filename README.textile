@@ -1,3 +1,5 @@
+*IMPORTANT: This gem now exists at "sunlightlabs/ruby-sunlightapi":http://github.com/sunlightlabs/ruby-sunlightapi.*
+
 h1. Sunlight Labs API Gem
 
 NOTE: This file is formatted in Textile and best viewed on "GitHub":http://github.com/luigi/sunlight.
