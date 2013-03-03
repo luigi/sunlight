@@ -1,4 +1,4 @@
-*IMPORTANT: This gem now exists at "sunlightlabs/ruby-sunlightapi":http://github.com/sunlightlabs/ruby-sunlightapi.*
+*IMPORTANT: This gem now exists at "sunlightlabs/ruby-sunlight":http://github.com/sunlightlabs/ruby-sunlight.*
 
 h1. Sunlight Labs API Gem
 
